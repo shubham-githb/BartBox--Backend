@@ -1,34 +1,26 @@
-const { mongo } = require('mongoose');
-const mongoose = require('mongoose');
-const {ObjectId} = mongoose.Schema;
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     name: String,
     email: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        unique: true,
-        required: 'Email address is required',
-        validate: [validateEmail, 'Please fill a valid email address'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+      type: String,
+      required: true,
+      index: true,
     },
-    role :{
-        type:String,
-        default: "Subscriber",
+    role: {
+      type: String,
+      default: "subscriber",
     },
-    cart : {
-        type: Array,
-        default: []
+    cart: {
+      type: Array,
+      default: [],
     },
     address: String,
-
-    // whishlist : [{
-    //     type:String
-    // }]
-
-},{timestamps:true}
+    //   wishlist: [{ type: ObjectId, ref: "Product" }],
+  },
+  { timestamps: true }
 );
 
-
-module.exports = mongoose.model('User',userSchema)
+module.exports = mongoose.model("User", userSchema);
